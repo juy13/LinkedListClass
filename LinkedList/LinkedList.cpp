@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "LinkedListClass.h"
 #include <iostream>
+#include "Human.h"
 
 
 
@@ -18,15 +19,64 @@ int main()
 	a.deletelem(0);
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	a.printList();
-	a.deletelem(0);
+	try
+	{
+		a.deletelem(5);
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	a.printList();
 	a.deletelem(0);
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	a.printList();
-	a.deletelem(0);
+	try
+	{
+		a.deletelem(2);
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	a.printList();
+
+	Human b1("Peter", 32);
+	Human b2("Ivan", 4);
+	Human b3("Sofia", 8);
+	Human b4("Mia", 12);
+	Human b5("Dima", 23);
+	Human b6("Tim", 55);
+	Human b7("Tonya", 70);
+	Human b8("Jack", 1);
+	LinkedListClass<Human> a2;
+
+	a2.addelem(b1);
+	a2.addelem(b2);
+	a2.addelem(b3);
+	a2.addelem(b4);
+	a2.addelem(b5);
+	a2.addelem(b6);
+	a2.addelem(b7);
+	a2.addelem(b8);
+	a2.printList();
+	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+	try
+	{
+		a2.deletelem(-4);
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+	a2.deletelem(4);
+	a2.printList();
+	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+	a2.deletelem(1);
+	a2.printList();
+
 
 }
 
