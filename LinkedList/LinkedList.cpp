@@ -15,9 +15,12 @@ int main()
 	a.addelem(4);
 	a.addelem(7);
 	a.addelem(5);
+	a.swap(0, 2);
+	std::cout << "Len : " << a.getLength() << "Full: " << a.getIsEmpty() << std::endl;
 	a.printList();
 	a.deletelem(0);
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+	
 	a.printList();
 	try
 	{
@@ -31,6 +34,7 @@ int main()
 	a.printList();
 	a.deletelem(0);
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+	std::cout << "Len : " << a.getLength() << std::endl;
 	a.printList();
 	try
 	{
@@ -41,6 +45,7 @@ int main()
 		std::cout << ex.what() << std::endl;
 	}
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+	std::cout << "Len : " << a.getLength() << std::endl;
 	a.printList();
 
 	Human b1("Peter", 32);
@@ -73,7 +78,9 @@ int main()
 	}
 	a2.deletelem(4);
 	a2.printList();
+	std::cout << "Len : " << a2.getLength() << "Full: " << a2.getIsEmpty() << std::endl;
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+	
 	a2.deletelem(1);
 	a2.printList();
 

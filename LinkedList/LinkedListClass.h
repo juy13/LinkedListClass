@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <iostream>
+#include "LnClTemp.h"
+
 
 
 // структура - элемент списка, является шаблонной и может принимать любой тип данных
@@ -10,31 +12,36 @@ struct list {
 };
 
 template<typename  TElement>
-class LinkedListClass
+class LinkedListClass: public LinkedListClassTemp<TElement>
 {
 private:
 	list<TElement> *head;		// указатель на начало списка
-	int len = 0;				// длина списка
 
-	list<TElement> * Get(int i) const;			// по индексу получаем указатель на элемент структуры, нужен для удаления по индексу
-	list<TElement> * Prev(list<TElement> * node) const;	// по индексу получаем указатель на элемент структуры, который предыдущий пришедшему, нужен для удаления по индексу
-	bool isEmpty() const;		// проверка на пустоту
+	list<TElement> * get(int i) const;			// по индексу получаем указатель на элемент структуры, нужен для удаления по индексу
+	list<TElement> * prev(list<TElement> * node) const;	// по индексу получаем указатель на элемент структуры, который предыдущий пришедшему, нужен для удаления по индексу
+	//bool isEmpty() const;		// проверка на пустоту
+	void swap_in(TElement& x, TElement& y)
+	{
+		TElement tmp{ std::move(x) }; // вызывает конструктор перемещения
+		x = std::move(y); // вызывает оператор присваивания перемещением
+		y = std::move(tmp); // вызывает оператор присваивания перемещением
+	}
 
 public:
 	LinkedListClass();
 	~LinkedListClass();
 	
-	void addelem(TElement number);			// добавление элемента
-	void printList() const;					// вывод списка
-	void deletelem(int ind);				// удаление элемента
-	TElement Get_by_index(int i) const;		// достать по индексу
-	int Get_len() const;					// получить длину
+	virtual void addelem(TElement number) override;			// добавление элемента
+	virtual void printList() const override;				// вывод списка
+	virtual void deletelem(int ind) override;				// удаление элемента
+	virtual TElement get_by_index(int i) const override;	// достать по индексу
+	virtual void swap(int ind1, int ind2) override;
 };
 
 template<typename TElement>
-inline list<TElement>* LinkedListClass<TElement>::Get(int i) const
+inline list<TElement>* LinkedListClass<TElement>::get(int i) const
 {
-	if (i < 0 || i >= this->len)
+	if (i < 0 || i >= this->getLength())
 		throw std::exception("Illegal index");
 	list<TElement> *temp = head;
 	int ind = 0;
@@ -47,9 +54,9 @@ inline list<TElement>* LinkedListClass<TElement>::Get(int i) const
 }
 
 template<typename TElement>
-inline TElement LinkedListClass<TElement>::Get_by_index(int i) const
+inline TElement LinkedListClass<TElement>::get_by_index(int i) const
 {
-	if (i < 0 || i >= this->len)
+	if (i < 0 || i >= this->getLength())
 		throw std::exception("Illegal index");
 	list<TElement> *temp = head;
 	int ind = 0;
@@ -62,22 +69,27 @@ inline TElement LinkedListClass<TElement>::Get_by_index(int i) const
 }
 
 template<typename TElement>
-inline int LinkedListClass<TElement>::Get_len() const
+inline void LinkedListClass<TElement>::swap(int ind1, int ind2)
 {
-	list<TElement> *temp = head;
-	int ind = 0;
-	while (temp->ptr != nullptr)
+	list<TElement> *lst1;
+	list<TElement> *lst2;
+	try
 	{
-		temp = temp->ptr;
-		ind++;
+		lst1 = this->get(ind1);
+		lst2 = this->get(ind2);
 	}
-	return (ind + 1);
+	catch (const std::exception&ex)
+	{
+		throw std::exception(ex.what());
+	}
+	this->swap_in(lst1->field, lst2->field);
 }
 
+
 template<typename TElement>
-inline list<TElement>* LinkedListClass<TElement>::Prev(list<TElement>* node) const
+inline list<TElement>* LinkedListClass<TElement>::prev(list<TElement>* node) const
 {
-	if (isEmpty()) 
+	if (!this->getIsEmpty())
 		throw std::exception("No elements");	 // В списке нет узлов
 	if (node == this->head) 
 		throw std::exception("No previos elements");	 // В списке нет узлов
@@ -88,16 +100,7 @@ inline list<TElement>* LinkedListClass<TElement>::Prev(list<TElement>* node) con
 }
 
 template<typename TElement>
-inline bool LinkedListClass<TElement>::isEmpty() const
-{
-	if (this->head == NULL)
-		return true;
-	else
-		return false;
-}
-
-template<typename TElement>
-LinkedListClass<TElement>::LinkedListClass()
+LinkedListClass<TElement>::LinkedListClass(): LinkedListClassTemp<TElement>(0, false)
 {
 	this->head = nullptr;
 }
@@ -119,7 +122,11 @@ void LinkedListClass<TElement>::addelem(TElement number)
 	nd->field = number;								 //задаем узлу данные
 	nd->ptr = nullptr;								 //новый узел в конце, поэтому NULL
 	if (this->head == nullptr)						 //если создаем первый узел
+	{
 		this->head = nd;
+		this->isEmpty = true;
+	}
+		
 	else											//если узел уже не первый
 	{
 		list<TElement> *current = head;
@@ -129,13 +136,13 @@ void LinkedListClass<TElement>::addelem(TElement number)
 													//предшествующий указывает на последний
 		current->ptr = nd;
 	}
-	this->len++;
+	this->LinkedListClassTemp<TElement>::length++;
 }
 
 template<typename TElement>
 void LinkedListClass<TElement>::printList() const
 {
-	if (this->len == 0)
+	if (this->getLength() == 0)
 		throw std::exception("Nothing to print");
 	list<TElement> *current = head;
 	while (current != nullptr)
@@ -148,18 +155,21 @@ void LinkedListClass<TElement>::printList() const
 template<typename TElement>
 inline void LinkedListClass<TElement>::deletelem(int ind)
 {
-	if (ind < 0 || ind >= this->len)
+	if (ind < 0 || ind >= this->getLength())
 		throw std::exception("Illegal index");
-	list<TElement> * node = this->Get(ind);
+	list<TElement> * node = this->get(ind);
 	if (node == NULL) 
 		throw std::exception("Nothing to delete");	 // В списке нет узлов
 	if (node == this->head)							  // Удаление корневого узла
 	{
+		this->LinkedListClassTemp<TElement>::length--;
+		this->LinkedListClassTemp<TElement>::isEmpty = false;
 		head = node->ptr;
 		delete node;
 		return;
 	}
-	list<TElement>* prev = this->Prev(node); // Удаление промежуточного узла
+	list<TElement>* prev = this->prev(node); // Удаление промежуточного узла
 	prev->ptr = node->ptr;
+	this->LinkedListClassTemp<TElement>::length--;
 	delete node;
 }
