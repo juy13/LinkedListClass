@@ -18,6 +18,7 @@ public:
 	int getLength() const;								// получить длину
 	bool getIsEmpty() const;							// проверка на пустоту
 	virtual void swap(int ind1, int ind2) = 0;
+
 };
 
 template<typename TElement>

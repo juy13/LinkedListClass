@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "LinkedListClass.h"
+#include "ISorter.h"
 #include <iostream>
 #include "Human.h"
 
@@ -10,17 +11,24 @@
 
 int main()
 {
+	ISorter B;
 	LinkedListClass<int> a;
-	a.addelem(3);
+	a.addelem(-3);
+	a.addelem(100);
 	a.addelem(4);
-	a.addelem(7);
-	a.addelem(5);
-	a.swap(0, 2);
+	a.addelem(37);
+	a.addelem(25);
+	B.quickSort(a, 0, a.getLength() - 1);
 	std::cout << "Len : " << a.getLength() << "Full: " << a.getIsEmpty() << std::endl;
 	a.printList();
 	a.deletelem(0);
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	
+	std::cout << "Element by operator " << a[2] << std::endl;
+	a[1] = 0;
+	a.printList();
+	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+
 	a.printList();
 	try
 	{
@@ -66,6 +74,8 @@ int main()
 	a2.addelem(b6);
 	a2.addelem(b7);
 	a2.addelem(b8);
+
+	B.bubleSort(a2, a2.getLength());
 	a2.printList();
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	try
@@ -76,6 +86,7 @@ int main()
 	{
 		std::cout << ex.what() << std::endl;
 	}
+	
 	a2.deletelem(4);
 	a2.printList();
 	std::cout << "Len : " << a2.getLength() << "Full: " << a2.getIsEmpty() << std::endl;

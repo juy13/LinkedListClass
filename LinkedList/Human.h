@@ -22,5 +22,8 @@ public:
 																		// 
 		return out;
 	}
+
+	friend bool operator>(const Human &lft, const Human &rgt);
+	friend bool operator<(const Human &lft, const Human &rgt);
 };
 

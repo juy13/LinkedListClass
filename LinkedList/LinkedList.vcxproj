@@ -152,12 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Human.h" />
+    <ClInclude Include="ISorter.h" />
     <ClInclude Include="LinkedListClass.h" />
     <ClInclude Include="LnClTemp.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Human.cpp" />
+    <ClCompile Include="ISorter.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="LinkedListClass.cpp" />
     <ClCompile Include="pch.cpp">

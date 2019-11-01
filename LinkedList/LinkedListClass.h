@@ -9,6 +9,7 @@ template<typename  TElement>
 struct list {
 	TElement field;
 	struct list<TElement> *ptr;
+	//const bool operator>(const TElement rgt);
 };
 
 template<typename  TElement>
@@ -36,7 +37,18 @@ public:
 	virtual void deletelem(int ind) override;				// удаление элемента
 	virtual TElement get_by_index(int i) const override;	// достать по индексу
 	virtual void swap(int ind1, int ind2) override;
+	TElement& operator[](int i);
+	//friend const bool operator>(const TElement lft, const TElement rgt);
 };
+
+template<typename TElement>
+const bool operator>(const TElement lft, const TElement rgt)
+{
+	if (lft < rgt)
+		return false;
+	else
+		return true;
+}
 
 template<typename TElement>
 inline list<TElement>* LinkedListClass<TElement>::get(int i) const
@@ -98,6 +110,22 @@ inline list<TElement>* LinkedListClass<TElement>::prev(list<TElement>* node) con
 		p = p->ptr;
 	return p;
 }
+
+template<typename TElement>
+inline TElement &LinkedListClass<TElement>::operator[](int i)
+{
+	try
+	{
+		list<TElement> *tmp = get(i);
+		return tmp->field;
+	}
+	catch (const std::exception& ex)
+	{
+		throw std::exception(ex.what());
+	}
+}
+
+
 
 template<typename TElement>
 LinkedListClass<TElement>::LinkedListClass(): LinkedListClassTemp<TElement>(0, false)
