@@ -18,7 +18,8 @@ int main()
 	a.addelem(4);
 	a.addelem(37);
 	a.addelem(25);
-	B.quickSort(a, 0, a.getLength() - 1);
+	B.bubleSort(a, a.getLength(), a.is_smaller);
+	B.bubleSort(a, a.getLength(), a.is_bigger);
 	std::cout << "Len : " << a.getLength() << "Full: " << a.getIsEmpty() << std::endl;
 	a.printList();
 	a.deletelem(0);
@@ -75,7 +76,7 @@ int main()
 	a2.addelem(b7);
 	a2.addelem(b8);
 
-	B.bubleSort(a2, a2.getLength());
+	B.insert_sort(a2, a2.getLength(), a2.is_bigger);
 	a2.printList();
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	try

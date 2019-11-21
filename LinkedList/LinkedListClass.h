@@ -39,6 +39,17 @@ public:
 	virtual void swap(int ind1, int ind2) override;
 	TElement& operator[](int i);
 	//friend const bool operator>(const TElement lft, const TElement rgt);
+	static bool is_bigger(TElement a, TElement b);
+	static bool is_smaller(TElement a, TElement b);
+
+	//struct Descending
+	//{
+	//	template<typename TElement>
+	//	bool operator()(TElement a, TElement b)
+	//	{
+	//		return a > b;
+	//	}
+	//};
 };
 
 template<typename TElement>
@@ -123,6 +134,24 @@ inline TElement &LinkedListClass<TElement>::operator[](int i)
 	{
 		throw std::exception(ex.what());
 	}
+}
+
+template<typename TElement>
+inline bool LinkedListClass<TElement>::is_bigger(TElement a, TElement b)
+{
+	if (a > b)
+		return true;
+	else
+		return false;
+}
+
+template<typename TElement>
+inline bool LinkedListClass<TElement>::is_smaller(TElement a, TElement b)
+{
+	if (a < b)
+		return true;
+	else
+		return false;
 }
 
 

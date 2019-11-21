@@ -6,16 +6,23 @@ class ISorter
 public:
 	ISorter();
 	~ISorter();
-	template<typename TElement, template <typename ...> class Container>
-	void bubleSort(Container<TElement> &array, int size);
+	template<typename TElement, template <typename ...> class Container, class Compare>
+	void bubleSort(Container<TElement> &array, int size, Compare comp);
 
-	template<typename TElement, template <typename ...> class Container>
-	void quickSort(Container<TElement> &arr, int left, int right);
+	template<typename TElement, template <typename ...> class Container, class Compare>
+	void quickSort(Container<TElement> &arr, int left, int right, Compare comp);
+
+	//template<typename TElement, template <typename ...> class Container, class Compare>
+	//void shellSort(Container<TElement> &vector, int len, Compare comp);
+
+	template<typename TElement, template <typename ...> class Container, class Compare>
+	void  insert_sort(Container<TElement> &vector, int size, Compare comp);
 };
 
-template<typename TElement, template <typename ...> class Container>
-void ISorter::bubleSort(Container<TElement> &array, int size)
+template<typename TElement, template <typename ...> class Container, class Compare>
+void ISorter::bubleSort(Container<TElement> &array, int size, Compare comp)
 {
+	//bool(*compare)(TElement, TElement) = func;
 	TElement tmp;
 	int k;
 	while (size > 1)
@@ -23,7 +30,7 @@ void ISorter::bubleSort(Container<TElement> &array, int size)
 		k = 0;
 		for (int i = 1; i < size; i++)
 		{
-			if (array[i] < array[i - 1])
+			if (comp(array[i], array[i - 1]))
 			{
 				tmp = array[i - 1];
 				array[i - 1] = array[i];
@@ -35,8 +42,8 @@ void ISorter::bubleSort(Container<TElement> &array, int size)
 	}
 }
 
-template<typename TElement, template <typename ...> class Container>
-void ISorter::quickSort(Container<TElement> &arr, int left, int right)
+template<typename TElement, template <typename ...> class Container, class Compare>
+void ISorter::quickSort(Container<TElement> &arr, int left, int right, Compare comp)
 {
 	int i = left, j = right;
 	TElement tmp;
@@ -66,6 +73,40 @@ void ISorter::quickSort(Container<TElement> &arr, int left, int right)
 	if (i < right)
 		this->quickSort(arr, i, right);
 
+}
+
+//template<typename TElement, template <typename ...> class Container, class Compare>
+//void  ISorter::shellSort(Container<TElement> &vector, int len, Compare comp)
+//{
+//	int step = len / 2;
+//	while (step > 0)
+//	{
+//		int i, j;
+//		for (i = step; i < len; i++)
+//		{
+//			TElement value = vector[i];
+//			for (j = i - step; (j >= 0) && (vector[j] > value); j -= step)
+//				vector[j + step] = vector[j];
+//			vector[j + step] = value;
+//		}
+//		step /= 2;
+//	}
+//}
+
+template<typename TElement, template <typename ...> class Container, class Compare>
+void  ISorter::insert_sort(Container<TElement> &vector, int size, Compare comp)
+{
+	for (int i = 1; i < size; i++)
+	{
+		TElement cur = vector[i];
+		int j = i;
+		while (j > 0 && cur < vector[j - 1])
+		{
+			vector[j] = vector[j - 1];
+			j--;
+		}
+		vector[j] = cur;
+	}
 }
 
 
