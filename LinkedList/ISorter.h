@@ -100,7 +100,7 @@ void  ISorter::insert_sort(Container<TElement> &vector, int size, Compare comp)
 	{
 		TElement cur = vector[i];
 		int j = i;
-		while (j > 0 && cur < vector[j - 1])
+		while (j > 0 && comp(cur, vector[j - 1]))
 		{
 			vector[j] = vector[j - 1];
 			j--;
