@@ -53,7 +53,7 @@ void test_func()
 	time(&start);
 	B.bubleSort(a1, a1.getLength(), a1.is_smaller);
 	time(&end);
-	double seconds = difftime(end, start);
+	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
 
 	LinkedListClass<int> b1;
@@ -86,7 +86,7 @@ void test_func()
 	time(&start);
 	B.bubleSort(a2, a2.getLength(), a2.is_smaller);
 	time(&end);
-	double seconds = difftime(end, start);
+	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
 
 	LinkedListClass<int> b2;
