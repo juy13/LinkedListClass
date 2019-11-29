@@ -44,6 +44,72 @@ void test_func()
 	time(&end);
 	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
+
+	LinkedListClass<int> a1;
+	for (int i = 0; i < 25000; i++)
+	{
+		a1.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(a1, a1.getLength(), a1.is_smaller);
+	time(&end);
+	double seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
+
+	LinkedListClass<int> b1;
+	for (int i = 0; i < 25000; i++)
+	{
+		b1.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(b1, b1.getLength(), b1.is_bigger);
+	time(&end);
+	seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
+
+	LinkedListClass<int> c1;
+	for (int i = 0; i < 25000; i++)
+	{
+		c1.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(c1, c1.getLength(), c1.is_bigger);
+	time(&end);
+	seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
+
+	LinkedListClass<int> a2;
+	for (int i = 0; i < 50000; i++)
+	{
+		a2.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(a2, a2.getLength(), a2.is_smaller);
+	time(&end);
+	double seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
+
+	LinkedListClass<int> b2;
+	for (int i = 0; i < 50000; i++)
+	{
+		b2.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(b2, b2.getLength(), b2.is_bigger);
+	time(&end);
+	seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
+
+	LinkedListClass<int> c2;
+	for (int i = 0; i < 50000; i++)
+	{
+		c2.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(c2, c2.getLength(), c2.is_bigger);
+	time(&end);
+	seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
 }
 
 int main()
