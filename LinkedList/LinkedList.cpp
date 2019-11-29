@@ -6,11 +6,50 @@
 #include "ISorter.h"
 #include <iostream>
 #include "Human.h"
+#include <time.h> 
 
+void test_func()
+{
+	time_t start, end;
+	ISorter B;
+	LinkedListClass<int> a;
+	for (int i = 0; i < 10000; i++)
+	{
+		a.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(a, a.getLength(), a.is_smaller);
+	time(&end);
+	double seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
 
+	LinkedListClass<int> b;
+	for (int i = 0; i < 10000; i++)
+	{
+		b.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(b, b.getLength(), b.is_bigger);
+	time(&end);
+	seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
+
+	LinkedListClass<int> c;
+	for (int i = 0; i < 10000; i++)
+	{
+		c.addelem(rand() % 50 - rand() % 50);
+	}
+	time(&start);
+	B.bubleSort(c, c.getLength(), c.is_bigger);
+	time(&end);
+	seconds = difftime(end, start);
+	std::cout << "The time: " << seconds << " seconds" << std::endl;
+}
 
 int main()
 {
+	test_func();
+
 	ISorter B;
 	LinkedListClass<int> a;
 	a.addelem(-3);
