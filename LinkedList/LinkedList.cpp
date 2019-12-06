@@ -8,8 +8,9 @@
 #include "Human.h"
 #include <time.h> 
 
-void test_func()
+void testing_sorts()
 {
+	std::cout << "Starting tests of sorting methods" << std::endl;
 	time_t start, end;
 	ISorter B;
 	LinkedListClass<int> a;
@@ -17,30 +18,32 @@ void test_func()
 	{
 		a.addelem(rand() % 50 - rand() % 50);
 	}
+	std::cout << "Testing bublesort on 10000 elements" << std::endl;
 	time(&start);
-	B.bubleSort(a, a.getLength(), a.is_smaller);
+	B.bubleSort(a, a.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
+	{
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	});
 	time(&end);
 	double seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
-
 	LinkedListClass<int> b;
+	std::cout << "Testing insert_sort on 10000 elements" << std::endl;
 	for (int i = 0; i < 10000; i++)
 	{
 		b.addelem(rand() % 50 - rand() % 50);
 	}
 	time(&start);
-	B.bubleSort(b, b.getLength(), b.is_bigger);
-	time(&end);
-	seconds = difftime(end, start);
-	std::cout << "The time: " << seconds << " seconds" << std::endl;
-
-	LinkedListClass<int> c;
-	for (int i = 0; i < 10000; i++)
+	B.insert_sort(b, b.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
 	{
-		c.addelem(rand() % 50 - rand() % 50);
-	}
-	time(&start);
-	B.bubleSort(c, c.getLength(), c.is_bigger);
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	});
 	time(&end);
 	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
@@ -50,72 +53,77 @@ void test_func()
 	{
 		a1.addelem(rand() % 50 - rand() % 50);
 	}
+	std::cout << "Testing bubleSort on 25000 elements" << std::endl;
 	time(&start);
-	B.bubleSort(a1, a1.getLength(), a1.is_smaller);
+	B.bubleSort(a1, a1.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
+	{
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	}); // (a1, a1.getLength(), a1.is_smaller);
 	time(&end);
 	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
-
+	std::cout << "Testing insert_sort on 25000 elements" << std::endl;
 	LinkedListClass<int> b1;
 	for (int i = 0; i < 25000; i++)
 	{
 		b1.addelem(rand() % 50 - rand() % 50);
 	}
 	time(&start);
-	B.bubleSort(b1, b1.getLength(), b1.is_bigger);
-	time(&end);
-	seconds = difftime(end, start);
-	std::cout << "The time: " << seconds << " seconds" << std::endl;
-
-	LinkedListClass<int> c1;
-	for (int i = 0; i < 25000; i++)
+	B.insert_sort(b1, b1.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
 	{
-		c1.addelem(rand() % 50 - rand() % 50);
-	}
-	time(&start);
-	B.bubleSort(c1, c1.getLength(), c1.is_bigger);
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	});
 	time(&end);
 	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
 
+	std::cout << "Testing bubleSort on 50000 elements" << std::endl;
 	LinkedListClass<int> a2;
 	for (int i = 0; i < 50000; i++)
 	{
 		a2.addelem(rand() % 50 - rand() % 50);
 	}
 	time(&start);
-	B.bubleSort(a2, a2.getLength(), a2.is_smaller);
+	B.bubleSort(a2, a2.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
+	{
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	});
 	time(&end);
 	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
-
+	std::cout << "Testing insert_sort on 50000 elements" << std::endl;
 	LinkedListClass<int> b2;
 	for (int i = 0; i < 50000; i++)
 	{
 		b2.addelem(rand() % 50 - rand() % 50);
 	}
 	time(&start);
-	B.bubleSort(b2, b2.getLength(), b2.is_bigger);
-	time(&end);
-	seconds = difftime(end, start);
-	std::cout << "The time: " << seconds << " seconds" << std::endl;
-
-	LinkedListClass<int> c2;
-	for (int i = 0; i < 50000; i++)
+	B.insert_sort(b2, b2.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
 	{
-		c2.addelem(rand() % 50 - rand() % 50);
-	}
-	time(&start);
-	B.bubleSort(c2, c2.getLength(), c2.is_bigger);
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	});
 	time(&end);
 	seconds = difftime(end, start);
 	std::cout << "The time: " << seconds << " seconds" << std::endl;
 }
 
+
+//template<typename TElement>
 int main()
 {
-	test_func();
-
+	testing_sorts();
 	ISorter B;
 	LinkedListClass<int> a;
 	a.addelem(-3);
@@ -123,8 +131,20 @@ int main()
 	a.addelem(4);
 	a.addelem(37);
 	a.addelem(25);
-	B.bubleSort(a, a.getLength(), a.is_smaller);
-	B.bubleSort(a, a.getLength(), a.is_bigger);
+	B.insert_sort(a, a.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
+	{
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	});
+	B.bubleSort(a, a.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
+	{
+		if (a[i] > a[j])
+			return true;
+		else
+			return false;
+	});
 	std::cout << "Len : " << a.getLength() << "Full: " << a.getIsEmpty() << std::endl;
 	a.printList();
 	a.deletelem(0);
@@ -181,7 +201,13 @@ int main()
 	a2.addelem(b7);
 	a2.addelem(b8);
 
-	B.insert_sort(a2, a2.getLength(), a2.is_bigger);
+	B.insert_sort(a2, a2.getLength(), [](LinkedListClass<int> &a, int i, int j) -> bool
+	{
+		if (a[i] < a[j])
+			return true;
+		else
+			return false;
+	});
 	a2.printList();
 	std::cout << "IIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
 	try
